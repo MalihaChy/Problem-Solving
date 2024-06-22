@@ -1,0 +1,60 @@
+#include<stdio.h>
+int main()
+{
+    int T,a,b,c,d,X,Y,x,y,i,flag=0;
+    char o,F;
+    scanf("%d",&T);
+    while(T--){
+        scanf("%d%c%c%c%d%c%c%c%d%c%c%c%d",&a,&F,&F,&F,&b,&F,&o,&F,&c,&F,&F,&F,&d);
+        if(o=='+'||o=='-'||o=='*'){
+            Y=(b*d);
+            if(o=='+'){
+                X=((a*d)+(b*c));
+            }
+            else{
+                    if(o=='-')
+                        X=((a*d)-(b*c));
+                    else
+                        X=a*c;
+            }
+        }
+        else{
+            X=a*d;
+            Y=b*c;
+        }
+        if(X>Y){
+            for(i=Y;i>=1;i--){
+                if(X%i==0&&Y%i==0){
+                    flag=1;
+                    break;
+                }
+            }
+        }
+        else{
+            if(Y>X){
+                for(i=X;i>=1;i--){
+                    if(X%i==0&&Y%i==0){
+                        flag=1;
+                        break;
+                    }
+                }
+            }
+        }
+        if(flag==1){
+            x=X/i;
+            y=Y/i;
+        }
+        else{
+                if(X==Y){
+                    x=1;
+                    y=1;
+                }
+                else{
+                    x=X;
+                    y=Y;
+                }
+        }
+        printf("%d/%d = %d/%d\n",X,Y,x,y);
+    }
+    return 0;
+}
