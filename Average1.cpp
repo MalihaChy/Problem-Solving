@@ -5,7 +5,5 @@ int main()
 {
     double a,b;
     cin>>a>>b;
-    printf("MEDIA = %.5lf\n",(a*3.5+b*7.5)/2.0);
+    printf("MEDIA = %.5lf\n",((a*3.5)+(b*7.5))/11.0);
 }
-
-
