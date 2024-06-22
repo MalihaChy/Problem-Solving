@@ -1,0 +1,226 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        int n;
+        string a;
+        cin>>n;
+        int ar[n],ar2[n];
+        for(int i=0; i<n; i++)
+            cin>>ar[i];
+        for(int i=0; i<n; i++)
+            cin>>ar2[i];
+        for(int i=0; i<n; i++)
+        {
+            if(ar[i]==1)
+            {
+                if(ar2[i]==1)
+                    a+='.';
+                else
+                {
+                    if(ar2[i]==2)
+                        a+=',';
+                    else
+                    {
+                        if(ar2[i]==3)
+                            a+='?';
+                        else
+                        {
+                            if(ar2[i]==4)
+                                a+='"';
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if(ar[i]==2)
+                {
+                    if(ar2[i]==1)
+                        a+='a';
+                    else
+                    {
+                        if(ar2[i]==2)
+                            a+='b';
+                        else
+                        {
+                            if(ar2[i]==3)
+                                a+='c';
+
+                        }
+                    }
+                }
+                else
+                {
+                    if(ar[i]==3)
+                    {
+                        if(ar2[i]==1)
+                            a+='d';
+                        else
+                        {
+                            if(ar2[i]==2)
+                                a+='e';
+                            else
+                            {
+                                if(ar2[i]==3)
+                                    a+='f';
+
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if(ar[i]==4)
+                        {
+                            if(ar2[i]==1)
+                                a+='g';
+                            else
+                            {
+                                if(ar2[i]==2)
+                                    a+='h';
+                                else
+                                {
+                                    if(ar2[i]==3)
+                                        a+='i';
+
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if(ar[i]==5)
+                            {
+                                if(ar2[i]==1)
+                                    a+='j';
+                                else
+                                {
+                                    if(ar2[i]==2)
+                                        a+='k';
+                                    else
+                                    {
+                                        if(ar2[i]==3)
+                                            a+='l';
+
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if(ar[i]==6)
+                                {
+                                    if(ar2[i]==1)
+                                        a+='m';
+                                    else
+                                    {
+                                        if(ar2[i]==2)
+                                            a+='n';
+                                        else
+                                        {
+                                            if(ar2[i]==3)
+                                                a+='o';
+
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if(ar[i]==7)
+                                    {
+                                        if(ar2[i]==1)
+                                            a+='p';
+                                        else
+                                        {
+                                            if(ar2[i]==2)
+                                                a+='q';
+                                            else
+                                            {
+                                                if(ar2[i]==3)
+                                                    a+='r';
+                                                else
+                                                {
+                                                    if(ar2[i]==4)
+                                                        a+='s';
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if(ar[i]==8)
+                                        {
+                                            if(ar2[i]==1)
+                                                a+='t';
+                                            else
+                                            {
+                                                if(ar2[i]==2)
+                                                    a+='u';
+                                                else
+                                                {
+                                                    if(ar2[i]==3)
+                                                        a+='v';
+
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if(ar[i]==9)
+                                            {
+                                                if(ar2[i]==1)
+                                                    a+='w';
+                                                else
+                                                {
+                                                    if(ar2[i]==2)
+                                                        a+='x';
+                                                    else
+                                                    {
+                                                        if(ar2[i]==3)
+                                                            a+='y';
+                                                        else
+                                                        {
+                                                            if(ar2[i]==4)
+                                                                a+='z';
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if(ar[i]==0)
+                                                {
+                                                    if(ar2[i]==1)
+                                                        a+=' ';
+                                                    else
+                                                    {
+                                                        if(ar2[i]==2)
+                                                            a+='  ';
+                                                        else
+                                                        {
+                                                            if(ar2[i]==3)
+                                                                a+='   ';
+                                                            else
+                                                            {
+                                                                if(ar2[i]==4)
+                                                                    a+='    ';
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        cout<<a<<endl;
+    }
+}
