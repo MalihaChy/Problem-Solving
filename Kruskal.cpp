@@ -1,58 +1,41 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int pr[1000]
+#define ll long long
+int par[110];
+int x,y,z;
 
-
-struct edge {
-    int u, v, w;
-    bool operator<(const edge& p) const
-    {
-        return w < p.w;
-    }
+struct edge{
+    int x,y,z;
 };
 
-vector<edge>e
+vector<edge>v;
 
-int find(int r)
-{
-    return (pr[r] == r) ? r : find(pr[r]);
-}
-int mst(int n)
-{
-    sort(e.begin(), e.end());
-    for (int i = 1; i <= n; i++)
-        pr[i] = i;
-
-    int count = 0, s = 0;
-    for (int i = 0; i < (int)e.size(); i++) {
-        int u = find(e[i].u);
-        int v = find(e[i].v);
-        if (u != v) {
-            pr[u] = v;
-            count++;
-            s += e[i].w;
-            if (count == n - 1)
-                break;
-        }
-    }
-    return s;
+bool cmp(edge a,edge b){
+    return a.z<b.z;
 }
 
 int main()
 {
-    // READ("in");
-    int n, m;
-    cin >> n >> m;
-    for (int i = 1; i <= m; i++) {
-        int u, v, w;
-        cin >> u >> v >> w;
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        int n,m;
+        cin>>n>>m;
+
+        for(int i=1;i<=n;i++)par[i]=i;
+
         edge get;
-        get.u = u;
-        get.v = v;
-        get.w = w;
-        e.push_back(get);
+        while(m--)
+        {
+            cin>>x>>y>>z;
+            get.x=x;
+            get.y=y;
+            get.z=z;
+            v.push_back(get);
+        }
+        sort(v.begin(),v.end,cmp);
+        Kruskal(1);
     }
-    cout << mst(n) << endl;
-    return 0;
 }

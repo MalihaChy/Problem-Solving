@@ -1,65 +1,92 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-//vector<int>v[1000010];
-//int ar[1000010];
+int n,m,A;
+
+struct edge
+{
+    int source;
+    int des;
+    int cost;
+} e;
+
+vector<edge>v;
+
+int par[11000];
+
+bool cmp(edge a, edge b)
+{
+    return a.cost<b.cost;
+}
+
+int Find(int x)
+{
+    if(par[x]==x)return x;
+    else
+    {
+        par[x]=Find(par[x]);
+        return par[x];
+    }
+}
+
+void Union(int x, int y)
+{
+    int px=Find(x);
+    int py=Find(y);
+    par[px]=py;
+}
+
+int Kruskal()
+{
+    int x,y,z,ans=0,sz=v.size();
+    for(int i=0; i<11000; i++)par[i]=i;
+    for(int i=0; i<sz; i++)
+    {
+        x=v[i].source;
+        y=v[i].des;
+        z=v[i].cost;
+        if(Find(x)!=Find(y))
+        {
+            ans+=z;
+            //cout<<z<<endl;
+            Union(x,y);
+        }
+    }
+    //cout<<ans<<endl;
+    return ans;
+}
 
 int main()
 {
-    int n,m,x,y;
-    while(1)
+    int t,x,y,z;
+    cin>>t;
+    for(int tc=1; tc<=t; tc++)
     {
-        cin>>n>>m;
-        vector<int>v[n+1];
-        int ar[n+1];
-        for(int i=0;i<=n;i++)v[i].clear();
-        memset(ar,0,sizeof(ar));
-        if(n==0&&m==0)return 0;
+        cin>>n>>m>>A;
+        v.clear();
         for(int i=0; i<m; i++)
         {
-            cin>>x>>y;
-            v[x].push_back(y);
-            ar[y]++;
-        }
-        int sn=-10;
-
-        queue<int>q;
-        int break_while=-10;
-        while(break_while==-10)
-        {
-            for(int i=1; i<=n; i++)
+            cin>>x>>y>>z;
+            if(z<A)
             {
-                if(ar[i]==0)
-                {
-                    sn=i;
-                    break_while=-10;
-                    break;
-                }
-                else break_while=-1000;
-            }
-            if(break_while==-10)
-            {
-                q.push(sn);
-                ar[sn]=-10;
-                int sz=v[sn].size();
-                for(int i=0; i<sz; i++)
-                {
-                    ar[v[sn][i]]--;
-                }
+                e.source=x;
+                e.des=y;
+                e.cost=z;
+                v.push_back(e);
             }
         }
-        if(sn==-10||q.size()!=n)
+        sort(v.begin(),v.end(),cmp);
+        //for(int i=0;i<v.size();i++)cout<<v[i].cost<<endl;
+        int ans1=Kruskal();
+        set<int>s;
+        int ans2=0;
+        for(int i=1; i<=n; i++)
         {
-            cout<<"IMPOSSIBLE\n";
+            if(par[i]==i)ans2++;
+            //cout<<"par"<<par[i]<<endl;
         }
-        if(q.size()==n)
-        {
-            while(!q.empty())
-            {
-                cout<<q.front()<<"\n";
-                q.pop();
-            }
-        }
+        ans1+=(ans2*A);
+        printf("Case %d: %d %d\n",tc,ans1,ans2);
     }
 }
 

@@ -1,51 +1,68 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-vector<int>v[110];
-int ar[110];
-bool isVisited[110];
-vector<int>ans;
-
-void DFS(int s)
-{
-    ans.push_back(s);
-    isVisited[s]=true;
-    int sz=v[s].size();
-    for(int i=0;i<sz;i++)
-    {
-        int x=v[s][i];
-        ar[x]--;
-        if(isVisited[x]==false&&ar[x]==0)DFS(x);
-    }
-}
-
 int main()
 {
-    int n,m,x,y,z;
-    while(1)
+    int t,n,x;
+    scanf("%d",&t);
+    for(int tc=1;tc<=t;tc++)
     {
-        cin>>n>>m;
-        if(n==0&&m==0)return 0;
-        else{
-            for(int i=0;i<=n;i++)v[i].clear();
-            ans.clear();
-            memset(ar,0,sizeof(ar));
-            memset(isVisited,false,sizeof(isVisited));
-            for(int i=0; i<m; i++)
+        scanf("%d",&n);
+        vector< pair<int,int> >v[n+1];
+        bool isVisited[n+1];
+        memset(isVisited,false,sizeof(isVisited));
+        int total=0;
+        int ar[n+1][n+1];
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=1;j<=n;j++)
             {
-                cin>>x>>y;
-                v[x].push_back(y);
-                ar[y]++;
+                scanf("%d",&x);
+                if(x!=0){
+                    ar[i][j]=x;
+                    total+=x;
+                }
+                else ar[i][j]=100000;
             }
-
-            for(int i=1;i<=n;i++)
-            {
-                if(isVisited[i]==false&&ar[i]==0)DFS(i);
-            }
-            cout<<ans[0];
-            for(int i=1;i<n;i++)cout<<" "<<ans[i];
-            cout<<"\n";
         }
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=1;j<=n;j++)
+            {
+                x=min(ar[i][j],ar[j][i]);
+                if(x!=100000){
+                    v[i].push_back(make_pair(-x,j));
+                    v[j].push_back(make_pair(-x,i));
+                }
+            }
+        }
+        int ans=0;
+        int node=0;
+        priority_queue< pair<int,int> >pq;
+        pq.push(make_pair(0,1));
+        pair<int,int>p;
+        int a,b,sz;
+        while(!pq.empty())
+        {
+            p=pq.top();
+            pq.pop();
+            a=p.second;
+            if(isVisited[a]==false)
+            {
+                ans+=(-p.first);
+                node++;
+                isVisited[a]=true;
+                sz=v[a].size();
+                for(int i=0;i<sz;i++)
+                {
+                    b=v[a][i].second;
+                    if(isVisited[b]==false)
+                        pq.push(v[a][i]);
+                }
+            }
+        }
+        if(node==n)printf("Case %d: %d\n",tc,total-ans);
+        else printf("Case %d: -1\n",tc);
     }
-}
 
+}

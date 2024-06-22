@@ -1,94 +1,80 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-vector<int>v[20020];
-bool isVisited[20020];
-int color[20020];
+struct edge{
+    int source;
+    int des;
+    double cost;
+}e;
 
-int BFS(int s)
+vector<edge>v;
+int par[250];
+
+bool cmp(edge a,edge b)
 {
-    int one=0,two=0;
-    isVisited[s]=true;
-    color[s]=1;
-    one++;
-    queue<int>q;
-    q.push(s);
-    while(!q.empty())
-    {
-        s=q.front();
-        q.pop();
-        int sz=v[s].size();
-        for(int i=0;i<sz;i++)
-        {
-            int x=v[s][i];
-            if(isVisited[x]==false){
-                isVisited[x]=true;
-                q.push(x);
-                if(color[s]==1){
-                    color[x]=2;
-                    two++;
-                }
-                else if(color[s]==2){
-                    color[x]=1;
-                    one++;
-                }
-            }
-        }
+    return a.cost<b.cost;
+}
+
+int Find(int x)
+{
+    if(par[x]==x)return x;
+    else{
+        par[x]=Find(par[x]);
+        return par[x];
     }
-    return max(one,two);
+}
+
+void Union(int x,int y)
+{
+    int px=Find(x);
+    int py=Find(y);
+    par[px]=py;
+}
+
+void Kruskal()
+{
+    int sz=v.size();
+    double ans;
+    for(int i=0;i<sz;i++)
+    {
+        if(Find(v[i].source)!=Find(v[i].des)){
+            ans=v[i].cost;
+            Union(v[i].source,v[i].des);
+        }
+        if(Find(0)==Find(1))break;
+    }
+    printf("Frog Distance = %.3lf\n\n",ans);
 }
 
 int main()
 {
-    int t,n,x,y;
-    scanf("%d",&t);
-    for(int tc=1;tc<=t;tc++)
+    int n,x,y,tc=0;
+    double a,b;
+    while(cin>>n)
     {
-        scanf("%d",&n);
-
-        memset(isVisited,false,sizeof(isVisited));
-        memset(color,0,sizeof(color));
-        for(int i=0;i<20020;i++)v[i].clear();
-
-        set<int>nodes;
-        nodes.clear();
+        if(n==0)return 0;
+        v.clear();
+        for(int i=0;i<250;i++)par[i]=i;
+        vector< pair<int,int> >point;
         for(int i=0;i<n;i++)
         {
-            scanf("%d%d",&x,&y);
-            nodes.insert(x);
-            nodes.insert(y);
-            v[x].push_back(y);
-            v[y].push_back(x);
+            cin>>x>>y;
+            point.push_back(make_pair(x,y));
         }
-        vector<int>vv;
-        vv.clear();
-        set<int>::iterator it;
-        for(it=nodes.begin();it!=nodes.end();it++){
-            vv.push_back(*it);
-        }
-
-        int z=vv.size();
-        int ans=0;
-        for(int i=0;i<z;i++){
-            if(isVisited[vv[i]]==false){
-                ans+=BFS(vv[i]);
+        printf("Scenario #%d\n",++tc);
+        for(int i=0;i<n;i++)
+        {
+            for(int j=i+1;j<n;j++)
+            {
+                a=point[i].first-point[j].first;
+                b=point[i].second-point[j].second;
+                e.source=i;
+                e.des=j;
+                e.cost=sqrt(a*a+b*b);
+                v.push_back(e);
             }
         }
-        //printf("%d",z);
-        //z=vv[z-1];
-        /*one=0;
-        two=0;
-        for(int i=1;i<20020;i++){
-            if(color[i]==1){
-                //printf("%d r    ",i);
-                one++;
-            }
-            else if(color[i]==2){
-                //printf("%d b    ",i);
-                two++;
-            }
-        }*/
-        printf("Case %d: %d\n",tc,ans);
+        sort(v.begin(),v.end(),cmp);
+        Kruskal();
     }
 }
-
